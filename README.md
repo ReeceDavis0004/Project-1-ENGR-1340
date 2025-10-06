@@ -2,7 +2,7 @@
 
 Justin Donahoo, Mason Womack, Reece Davis, and Zachary Lopez
 
-## Install NodejS
+## Install NodeJS
 Open and install [https://nodejs.org/en/download](NodeJS)
 
 Once installed, in your build directory run `npm i`
