@@ -11,7 +11,6 @@ const AuthModal = ({ mode, onClose, onSwitchMode, onSubmit }) => {
 	}, [accountType]);
 
 	const handleMicrosoftLogin = () => {
-		// Corrected: Use the full URL for the API server
 		window.location.href = `http://localhost:3001/api/auth/microsoft`;
 	};
 

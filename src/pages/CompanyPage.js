@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import feather from 'feather-icons';
 import { apiCall } from '../api';
-import ApplicantsModal from '../components/ApplicantsModal'; // Import the new component
+import ApplicantsModal from '../components/ApplicantsModal';
 
 const CompanyPage = ({ token, currentUser, onDataUpdate, apiBaseUrl }) => {
 	const { companyId } = useParams();
@@ -15,8 +15,7 @@ const CompanyPage = ({ token, currentUser, onDataUpdate, apiBaseUrl }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [newLogo, setNewLogo] = useState(null);
 
-	// New state for applicants modal
-	const [viewingApplicantsFor, setViewingApplicantsFor] = useState(null); // Will hold the job object
+	const [viewingApplicantsFor, setViewingApplicantsFor] = useState(null);
 	const [applicants, setApplicants] = useState([]);
 	const [isLoadingApplicants, setIsLoadingApplicants] = useState(false);
 

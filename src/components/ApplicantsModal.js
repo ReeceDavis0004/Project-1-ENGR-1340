@@ -10,7 +10,7 @@ const ApplicantsModal = ({ job, applicants, isLoading, onClose, apiBaseUrl }) =>
 	}, [isLoading]);
 
 	const viewProfile = (studentId) => {
-		onClose(); // Close modal before navigating
+		onClose();
 		navigate(`/profile/${studentId}`);
 	};
 

@@ -69,7 +69,7 @@ function App() {
         type: decoded.accountType,
         companyId: decoded.companyId
       });
-      navigate('/'); // Redirect to home on successful login
+      navigate('/');
     } catch (e) {
       console.error("Failed to decode token", e);
       handleLogout();
@@ -80,7 +80,6 @@ function App() {
     if (token && !currentUser) {
       try {
         const decoded = jwtDecode(token);
-        // Check if token is expired
         if (decoded.exp * 1000 < Date.now()) {
           handleLogout();
         } else {

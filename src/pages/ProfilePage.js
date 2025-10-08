@@ -21,7 +21,7 @@ const ProfilePage = ({ currentUser, token, onProfileUpdate, apiBaseUrl }) => {
 				setFormData(data);
 			} catch (error) {
 				console.error("Failed to fetch profile", error);
-				navigate('/'); // Redirect home if profile not found
+				navigate('/');
 			} finally {
 				setIsLoading(false);
 			}
