@@ -52,7 +52,6 @@ const Header = ({ isAuthenticated, currentUser, onLoginClick, onSignupClick, onL
 				) : (
 					<>
 						<button className="btn btn-secondary" onClick={onLoginClick}>Log In</button>
-						<button className="btn btn-primary" onClick={onSignupClick}>Sign Up</button>
 					</>
 				)}
 			</div>

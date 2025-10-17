@@ -3,6 +3,29 @@ import { useParams, useNavigate } from 'react-router-dom';
 import feather from 'feather-icons';
 import { apiCall } from '../api';
 
+const SubscriptionBadge = ({ tier }) => {
+	if (!tier || tier === 'Basic') {
+		return null;
+	}
+
+	const tierInfo = {
+		Pro: { color: '#cd7f32', name: 'Pro' },
+		Ultimate: { color: '#c0c0c0', name: 'Ultimate' },
+		Elite: { color: '#ffd700', name: 'Elite' },
+	};
+
+	const style = {
+		color: tierInfo[tier]?.color || '#ffffff',
+	};
+
+	return (
+		<div className="subscription-badge">
+			<i data-feather="anchor" style={{ color: style.color }}></i>
+			<span style={{ color: style.color }}>{tierInfo[tier]?.name} Tier</span>
+		</div>
+	);
+};
+
 const ProfilePage = ({ currentUser, token, onProfileUpdate, apiBaseUrl }) => {
 	const { profileId } = useParams();
 	const navigate = useNavigate();
@@ -75,7 +98,10 @@ const ProfilePage = ({ currentUser, token, onProfileUpdate, apiBaseUrl }) => {
 			{!isEditing ? (
 				<div>
 					<div className="profile-header">
-						<img src={student.profilePic.startsWith('http') ? student.profilePic : `${apiBaseUrl}${student.profilePic}`} alt={student.name} />
+						<div className='profile-data'>
+							<SubscriptionBadge tier={student.subscriptionTier} />
+							<img src={student.profilePic.startsWith('http') ? student.profilePic : `${apiBaseUrl}${student.profilePic}`} alt={student.name}></img>
+						</div>
 						<div className="profile-info">
 							<h1>{student.name}</h1>
 							<p>{student.major || 'Undeclared Major'}</p>

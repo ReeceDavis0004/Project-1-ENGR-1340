@@ -17,7 +17,7 @@ import HomePage from './pages/HomePage';
 import AuthCallbackPage from './pages/AuthCallback';
 import SubscriptionsPage from './pages/SubscriptionsPage';
 
-const API_BASE_URL = 'https://api.reecedavis.com';
+const API_BASE_URL = 'http://localhost:3001';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
