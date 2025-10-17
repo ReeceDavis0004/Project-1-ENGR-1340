@@ -13,10 +13,10 @@ const Header = ({ isAuthenticated, currentUser, onLoginClick, onSignupClick, onL
 
 	return (
 		<header className="app-header">
-			<div className="logo-container">
+			<Link className="logo-container" to="/">
 				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Texas_Tech_Athletics_logo.svg/1749px-Texas_Tech_Athletics_logo.svg.png" alt="Texas Tech Logo" />
 				<span>Red Raider JobConnect</span>
-			</div>
+			</Link>
 			<nav className="nav-links">
 				{navItems.map(item => (
 					<Link key={item.id} to={item.path} className={`nav-link ${activePage === item.id ? 'active' : ''}`}>

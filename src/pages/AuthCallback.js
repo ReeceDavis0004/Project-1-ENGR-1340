@@ -11,7 +11,6 @@ const AuthCallbackPage = ({ onLoginSuccess }) => {
 		if (token) {
 			onLoginSuccess(token);
 		} else {
-			// no token was found when trying to login, we can pretty much assume they cancelled the request
 			navigate('/');
 		}
 	}, [location, navigate, onLoginSuccess]);

@@ -6,15 +6,18 @@ import { apiCall } from './api';
 
 import Header from './components/Header';
 import AuthModal from './components/AuthModel';
+import Footer from './components/Footer';
 import StudentsPage from './pages/StudentsPage';
 import CompaniesPage from './pages/CompaniesPage';
 import JobsPage from './pages/JobsPage';
 import ApplicationsPage from './pages/ApplicationPage';
 import ProfilePage from './pages/ProfilePage';
 import CompanyPage from './pages/CompanyPage';
+import HomePage from './pages/HomePage';
 import AuthCallbackPage from './pages/AuthCallback';
+import SubscriptionsPage from './pages/SubscriptionsPage';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'https://api.reecedavis.com';
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -49,6 +52,8 @@ function App() {
     }
   }, []);
 
+
+
   const handleLogout = useCallback(() => {
     localStorage.removeItem('token');
     setToken(null);
@@ -67,7 +72,8 @@ function App() {
         name: decoded.name,
         email: decoded.email,
         type: decoded.accountType,
-        companyId: decoded.companyId
+        companyId: decoded.companyId,
+        subscriptionTier: decoded.subscriptionTier
       });
       navigate('/');
     } catch (e) {
@@ -75,6 +81,27 @@ function App() {
       handleLogout();
     }
   }, [navigate, handleLogout]);
+
+  const decodeAndSetUser = useCallback((tokenToDecode) => {
+    try {
+      const decoded = jwtDecode(tokenToDecode);
+      if (decoded.exp * 1000 < Date.now()) {
+        handleLogout();
+      } else {
+        setCurrentUser({
+          id: decoded.userId,
+          name: decoded.name,
+          email: decoded.email,
+          type: decoded.accountType,
+          companyId: decoded.companyId,
+          subscriptionTier: decoded.subscriptionTier
+        });
+      }
+    } catch (e) {
+      console.error("Invalid token", e);
+      handleLogout();
+    }
+  }, [handleLogout]);
 
   useEffect(() => {
     if (token && !currentUser) {
@@ -153,21 +180,31 @@ function App() {
     }
   };
 
+  const handleSubscriptionUpdate = (newToken) => {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+    decodeAndSetUser(newToken);
+  };
+
+
   return (
     <>
       {showModal && <AuthModal mode={modalMode} onClose={handleCloseModal} onSubmit={handleAuthSubmit} onSwitchMode={() => setModalMode(prev => prev === 'login' ? 'signup' : 'login')} />}
       <Header isAuthenticated={isAuthenticated} currentUser={currentUser} onLoginClick={handleShowLogin} onSignupClick={handleShowSignup} onLogout={handleLogout} />
       <main className="main-content">
         <Routes>
-          <Route path="/" element={<StudentsPage students={students} isLoading={isLoading} apiBaseUrl={API_BASE_URL} />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/students" element={<StudentsPage students={students} isLoading={isLoading} apiBaseUrl={API_BASE_URL} />} />
           <Route path="/jobs" element={<JobsPage isAuthenticated={isAuthenticated} currentUser={currentUser} appliedJobs={appliedJobs} handleApply={handleApply} jobs={jobs} isLoading={isLoading} apiBaseUrl={API_BASE_URL} />} />
           <Route path="/companies" element={<CompaniesPage companies={companies} isLoading={isLoading} apiBaseUrl={API_BASE_URL} />} />
           <Route path="/applications" element={isAuthenticated ? <ApplicationsPage currentUser={currentUser} appliedJobsInfo={jobs.filter(job => appliedJobs.includes(job.id))} isLoading={isLoading} apiBaseUrl={API_BASE_URL} /> : <p>Please log in to see your applications.</p>} />
           <Route path="/profile/:profileId" element={<ProfilePage currentUser={currentUser} token={token} onProfileUpdate={fetchPublicData} apiBaseUrl={API_BASE_URL} />} />
           <Route path="/company/:companyId" element={<CompanyPage token={token} currentUser={currentUser} onDataUpdate={fetchPublicData} apiBaseUrl={API_BASE_URL} />} />
           <Route path="/auth/callback" element={<AuthCallbackPage onLoginSuccess={handleLoginSuccess} />} />
+          <Route path="/subscriptions" element={isAuthenticated && currentUser?.type === 'student' ? <SubscriptionsPage currentUser={currentUser} token={token} onSubscriptionUpdate={handleSubscriptionUpdate} /> : <p>Please log in as a student to view subscriptions.</p>} />
         </Routes>
       </main>
+      <Footer />
     </>
   );
 }
