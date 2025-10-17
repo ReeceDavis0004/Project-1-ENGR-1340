@@ -6,9 +6,22 @@ const StudentsPage = ({ students, isLoading, apiBaseUrl }) => {
 	const [studentSearchQuery, setStudentSearchQuery] = useState('');
 	const navigate = useNavigate();
 
-	const filteredStudents = students.filter(student =>
-		student.name.toLowerCase().includes(studentSearchQuery.toLowerCase())
-	);
+	const normalizeName = (name) => {
+		const lower = name.toLowerCase().trim();
+		if (lower.includes(',')) {
+			const [last, first] = lower.split(',').map(s => s.trim());
+			return `${first} ${last}`;
+		}
+		return lower;
+	};
+
+	const filteredStudents = students.filter(student => {
+		const normalizedStudentName = normalizeName(student.name);
+		const normalizedQuery = studentSearchQuery.toLowerCase().trim();
+
+		return normalizedStudentName.includes(normalizedQuery) || student.name.toLowerCase().includes(normalizedQuery)
+
+	});
 
 	const onViewProfile = (id) => navigate(`/profile/${id}`);
 
