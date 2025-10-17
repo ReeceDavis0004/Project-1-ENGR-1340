@@ -40,5 +40,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://api.reecedavis.com"
+  "proxy": "http://localhost:3001"
 }

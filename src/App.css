@@ -38,15 +38,17 @@ a {
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
 }
 
 .logo-container {
+  justify-self: start;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -59,10 +61,12 @@ a {
   height: 40px;
 }
 
-.nav-links {
+.nav-links-desktop {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  justify-self: center;
+  min-width: 0;
 }
 
 .nav-link {
@@ -73,6 +77,7 @@ a {
   border-bottom: 2px solid transparent;
   transition: color 0.2s, border-color 0.2s;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .nav-link.active,
@@ -83,9 +88,51 @@ a {
 
 .user-actions {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  justify-self: end;
+  gap: .5rem;
+  min-width: 0;
 }
+
+.menu-button-mobile {
+  display: none;
+  justify-self: end;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: .25rem;
+  line-height: 0;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: .75rem 1rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .nav-links-desktop,
+  .user-actions {
+    display: none;
+  }
+
+
+  .logo-container img {
+    height: 32px;
+  }
+
+}
+
+.mobile-menu-btn {
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+}
+
+
+
 
 .user-greeting {
   font-weight: 500;
@@ -250,6 +297,12 @@ a {
   border-radius: 999px;
   font-size: 0.8rem;
   font-weight: 500;
+}
+
+.skill-tag.extra-skill {
+  background-color: var(--tt-red);
+  color: var(--text-primary);
+  font-weight: bold;
 }
 
 .card-header {
@@ -609,6 +662,7 @@ a {
   font-weight: 500;
   display: block;
   width: 100%;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .nav-link-mobile-item:hover {
@@ -648,6 +702,15 @@ a {
 
   .menu-button-mobile {
     display: block;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-primary);
   }
 
   .nav-links-mobile {

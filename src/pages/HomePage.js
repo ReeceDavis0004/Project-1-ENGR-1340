@@ -30,7 +30,7 @@ const HomePage = () => {
 	return (
 		<div className="home-page">
 			<section className="hero-section">
-				<h1>Welcome to Red Raider Connect</h1>
+				<h1>Welcome to Red Raider JobConnect</h1>
 				<p className="subtitle">Platform for Texas Tech students to meet their future employers</p>
 			</section>
 

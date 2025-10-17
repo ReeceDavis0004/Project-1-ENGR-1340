@@ -7,7 +7,7 @@ const Footer = () => {
 			<div className="footer-content">
 				<div className="footer-logo">
 					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Texas_Tech_Athletics_logo.svg/1749px-Texas_Tech_Athletics_logo.svg.png" alt="Texas Tech Logo" />
-					<span>Red Raider Connect</span>
+					<span>Red Raider JobConnect</span>
 				</div>
 				<div className="footer-links">
 					<Link to="/students">Students</Link>
